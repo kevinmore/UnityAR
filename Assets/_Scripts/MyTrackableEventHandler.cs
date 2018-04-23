@@ -19,7 +19,8 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 
     public Transform anchorPoint;
     public GameObject ARObj;
-    public float staticDistanceToScreen;
+    public float staticDistanceToScreen = 5.0f;
+    public float transitionDuration = 0.3f;
 
     #region UNITY_MONOBEHAVIOUR_METHODS
 
@@ -77,14 +78,16 @@ public class MyTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
     protected virtual void OnTrackingFound()
     {
         // set the obj back to its original pos
-        ARObj.transform.position = anchorPoint.position;
+        iTween.MoveTo(ARObj, anchorPoint.position, transitionDuration);
     }
 
     protected virtual void OnTrackingLost()
     {
         // set the obj to the center of screen
-        ARObj.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2.0f,
+        Vector3 screenPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2.0f,
             Screen.height / 2.0f, Camera.main.nearClipPlane + staticDistanceToScreen));
+        
+        iTween.MoveTo(ARObj, screenPos, transitionDuration);
     }
 
     #endregion // PROTECTED_METHODS
