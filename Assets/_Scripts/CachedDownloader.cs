@@ -80,7 +80,7 @@ public class CachedDownloader : MonoBehaviour {
         if (useCached)
         {
             string pathforwww = "file://" + filePath;
-            Debug.Log("TRYING FROM CACHE " + url + "  file " + pathforwww);
+            Debug.Log("Tring to load from cache " + url + "  file " + pathforwww);
             www = new WWW(pathforwww);
         }
         else
